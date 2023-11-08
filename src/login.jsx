@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import {useNavigate} from 'react-router-dom'
 
 
-const GetData = () => {
+const Login = () => {
 
     const navigate = useNavigate()
 
@@ -17,6 +17,7 @@ const GetData = () => {
      }
     }
     `
+    
     const [username, setUsername] = useState('');
 
     const [login] = useMutation(LOGIN_MUTATION, {
@@ -31,7 +32,9 @@ const GetData = () => {
 
             Cookies.set('accessToken', accessToken);
             Cookies.set('refreshToken', refreshToken);
-            console.log(response);
+            localStorage.setItem('accessToken',accessToken);
+            localStorage.setItem('refreshToken',refreshToken);
+            // console.log(response);
             navigate('/displaydata')
           } catch (error) {
             console.error(error);
@@ -47,19 +50,4 @@ const GetData = () => {
   )
 }
 
-export default GetData
-
-
-    // const {data} = useQuery(QUERY_ALL_USERS)
-    // if(data){  
-    //     console.log(data);
-    // }
-    // const QUERY_ALL_USERS = gql`
-    // query ExampleQuery{
-    //     users {
-    //     id
-    //     name
-    //     age
-    //   }
-    // }
-    // `
+export default Login

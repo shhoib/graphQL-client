@@ -63,14 +63,11 @@ import './App.css';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import GetData from './getData';
 import Datas from './datas';
+import Login from './login';
 import Cookies from 'js-cookie';
 
 
-const httpLink = createHttpLink({
-  uri: 'http://localhost:8080/graphql', 
-});
 
 const authLink = setContext((_, { headers }) => {
   const token = Cookies.get('accessToken')|| localStorage.getItem('accessToken');
@@ -79,8 +76,12 @@ const authLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : '', 
-    },
+    }, 
   };
+});
+
+const httpLink = createHttpLink({
+  uri: 'http://localhost:8080/graphql', 
 });
 
 const client = new ApolloClient({
@@ -94,7 +95,7 @@ function App() {
       <div className="App">
         <Router>
           <Routes>
-            <Route path="/" element={<GetData />} />
+            <Route path="/" element={<Login />} />
             <Route path="/displaydata" element={<Datas />} />
           </Routes>
         </Router>
